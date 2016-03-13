@@ -26,7 +26,7 @@ public class EmployeeController {
      
     @RequestMapping("/term/{term}")
     public Iterable<Employee> getEmployee(@PathVariable("term") String term) {
-    	return eDao.findByFirstNameContainingOrLastNameContainingAllIgnoreCase(term, term);
+    	return eDao.findByFirstNameContainingOrLastNameContainingOrFullNameContainingOrOrganizationNameContainingOrSubOrganizationNameContainingOrLocationContainingOrJobTitleContainingOrJobTypeContainingAllIgnoreCase(term, term, term, term, term, term, term, term);
     }
     
     @RequestMapping("/update")

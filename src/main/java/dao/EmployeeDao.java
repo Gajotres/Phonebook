@@ -9,6 +9,6 @@ public interface EmployeeDao extends CrudRepository<Employee, Long> {
 
   public Employee findByUserId(String userId);
   
-  public Iterable<Employee> findByFirstNameContainingOrLastNameContainingAllIgnoreCase(String firstName, String lastName);
+  public Iterable<Employee> findByFirstNameContainingOrLastNameContainingOrFullNameContainingOrOrganizationNameContainingOrSubOrganizationNameContainingOrLocationContainingOrJobTitleContainingOrJobTypeContainingAllIgnoreCase(String firstName, String lastName, String fullName, String organizationName, String subOrganizationName, String location, String jobTitle, String jobType);
 
 }
