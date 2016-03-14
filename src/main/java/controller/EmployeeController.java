@@ -26,7 +26,7 @@ public class EmployeeController {
      
     @RequestMapping("/term/{term}")
     public Iterable<Employee> getEmployee(@PathVariable("term") String term) {
-    	return eDao.findByFirstNameContainingOrLastNameContainingOrFullNameContainingOrOrganizationNameContainingOrSubOrganizationNameContainingOrLocationContainingOrJobTitleContainingOrJobTypeContainingAllIgnoreCase(term, term, term, term, term, term, term, term);
+    	return eDao.findEmployeesBySearchTerm(term, term, term, term, term, term, term, term, term);
     }
     
     @RequestMapping("/update")
@@ -38,8 +38,8 @@ public class EmployeeController {
         	employee.setTelephoneNumber(telephoneNumber);;
         	eDao.save(employee);
           } catch (Exception ex) {
-            return "Error updating the user: " + ex.toString();
+            return "Error updating the employee: " + ex.toString();
           }
-          return "User succesfully updated!";
+          return "Employee succesfully updated!";
     }   
 }
