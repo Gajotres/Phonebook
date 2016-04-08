@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -68,6 +69,10 @@ public class Employee {
 	
 	@Column(name="telefon", length=64, nullable=true)
 	private String telephoneNumber;
+	
+	@Column(length=1000000)
+	@Lob
+	private String image;
 
 	public int getId() {
 		return id;
@@ -204,4 +209,12 @@ public class Employee {
 	public void setTelephoneNumber(String telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}	
 }

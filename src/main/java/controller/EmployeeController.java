@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 import service.EmployeeService;
 import model.Employee;
 import dao.EmployeeDao;
@@ -23,6 +25,11 @@ public class EmployeeController {
     public Iterable<Employee> getAll () {
         return eDao.findAll();
     }
+    
+    @RequestMapping("/id/{id}")
+    public Employee getEmployeeById (@PathVariable("id") int id) {
+        return eDao.findById(id);
+    }    
      
     @RequestMapping("/term/{term}")
     public Iterable<Employee> getEmployee(@PathVariable("term") String term) {
