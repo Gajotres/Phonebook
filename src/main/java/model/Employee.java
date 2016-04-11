@@ -74,6 +74,10 @@ public class Employee {
 	@Lob
 	private String image;
 
+	@Column(length=1000000)
+	@Lob
+	private String smallImage;	
+
 	public int getId() {
 		return id;
 	}
@@ -216,5 +220,13 @@ public class Employee {
 
 	public void setImage(String image) {
 		this.image = image;
+	}	
+	
+	public String getSmallImage() {
+		return smallImage;
+	}
+
+	public void setSmallImage(String smallImage) {
+		this.smallImage = smallImage;
 	}	
 }
