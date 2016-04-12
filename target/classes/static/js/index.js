@@ -19,8 +19,38 @@ imenik.config(function($routeProvider) {
     });
 });
 
-imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees) {
+imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees, croatianConstants) {
 
+    $scope.letters = [];
+    $scope.organizations = {};  
+
+    $scope.input = {
+        term : '',
+        letter: '',
+        org: ''
+    }
+
+    // Fill Letters selectbox
+    var counter = 0;
+
+    angular.forEach(croatianConstants.letters.split(" "), function(value){
+         $scope.letters.push({id: counter++, name : value});
+    });    
+    $scope.selectedLetter = { id: 1, name: 'A' };
+
+    $scope.findEmployeesByTerm = function() {
+        if($scope.input.term.length > 2) {
+            $scope.findEmployees($scope.input.term, 'term');
+        }
+    };
+
+    $scope.findEmployees = function(term, method) {
+        if(term) {
+            Employees.list(term, method, function(employees) {
+                $scope.employees = employees;
+            });            
+        }
+    };    
 });
 
 imenik.controller('EmployeeInfoCtrl', function($scope, $routeParams, Employees) {
@@ -51,6 +81,14 @@ imenik.controller('HeaderCtrl',function($scope){
 
 });
 
+imenik.constant("croatianConstants", {
+    "letters": "A B C Ć Č D DŽ Đ E F G H I J K L LJ M N NJ O P R S Š T U V Z Ž",
+    "countryPrefix" : "+385",
+    "companyMobilePrefixPattern" : /^0914501/,
+    "companyTelephonePrefixPattern" : " 1 4600",
+    "dummy_image" : "dummy_user.jpg"
+});
+
 imenik.factory('Employees', function($http) {
     
     var cachedEmployees;
@@ -61,7 +99,7 @@ imenik.factory('Employees', function($http) {
         if(cachedEmployees && cashedTerm === term) {
             callback(cachedEmployees);
         } else {
-            var url = 'handler.php/' + method + '/' + Base64.encode(term);
+            var url = 'http://localhost:8080/employees/' + method + '/' + term;
 
             $http.get(url).success(function(data) {
                 cachedEmployees = data;
@@ -81,7 +119,7 @@ imenik.factory('Employees', function($http) {
                 })[0];
                 callback(employee);                 
             } else {             
-                var url = 'handler.php/employee/' + Base64.encode(id);
+                var url = 'http://localhost:8080/employees/id/' + id;
 
                 $http.get(url).success(function(data) {                      
                     callback(data[0]);

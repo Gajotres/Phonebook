@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "imenik")
 public class Employee {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -31,10 +31,7 @@ public class Employee {
 	
 	@Column(name="prezime", length=64, nullable=false)
 	private String lastName;
-	
-	@Column(name="naziv", length=128, nullable=false)
-	private String fullName;
-	
+		
 	@Column(name="naziv_org_jedinice", length=128, nullable=true)
 	private String organizationName;
 	
@@ -70,13 +67,13 @@ public class Employee {
 	@Column(name="telefon", length=64, nullable=true)
 	private String telephoneNumber;
 	
-	@Column(length=1000000)
+	/*@Column(length=1000000)
 	@Lob
 	private String image;
 
 	@Column(length=1000000)
 	@Lob
-	private String smallImage;	
+	private String smallImage;*/	
 
 	public int getId() {
 		return id;
@@ -116,14 +113,6 @@ public class Employee {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
 	}
 
 	public String getOrganizationName() {
@@ -214,7 +203,7 @@ public class Employee {
 		this.telephoneNumber = telephoneNumber;
 	}
 
-	public String getImage() {
+	/*public String getImage() {
 		return image;
 	}
 
@@ -228,5 +217,6 @@ public class Employee {
 
 	public void setSmallImage(String smallImage) {
 		this.smallImage = smallImage;
-	}	
+	}	*/
+		
 }
