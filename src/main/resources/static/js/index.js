@@ -1,4 +1,4 @@
-var imenik = angular.module('imenik', ['ngRoute','ngMaterial']);
+var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter']);
 
 imenik.run(function($rootScope) {
     //
@@ -22,6 +22,7 @@ imenik.config(function($routeProvider) {
 imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees, croatianConstants) {
 
     $scope.letters = [];
+    $scope.employees = [];
     $scope.organizations = {};  
 
     $scope.input = {
@@ -121,11 +122,46 @@ imenik.factory('Employees', function($http) {
             } else {             
                 var url = 'http://localhost:8080/employees/id/' + id;
 
-                $http.get(url).success(function(data) {                      
+                $http.get(url)
+                .then(function (data) {
                     callback(data[0]);
-                });                
+                }, function (data) {                   
+                    console.info('error'); 
+                });
             }
         }
     };
 
+});
+
+/* TODO: Testirati da li je potrebno provjeravati i duljinu input stringa */
+imenik.filter('formatMobile', function(croatianConstants){
+    return function(input) {
+        if (input && input.length > 0 && input !== 'NULL') {
+            
+            var formatMobileNumber = [input.substring(1).slice(0, 2), " ", input.substring(1).slice(2)].join('');
+            formatMobileNumber = [formatMobileNumber.slice(0, 7), " ", formatMobileNumber.slice(7)].join('');
+            
+            return (croatianConstants.companyMobilePrefixPattern.test(input)) ? '2' + input.match(/...$/) + ' (' + croatianConstants.countryPrefix + formatMobileNumber + ')' : input;
+        } else {
+            return '-';
+        }
+    };
+});
+
+/* TODO: Testirati da li je potrebno provjeravati i duljinu input stringa */
+imenik.filter('formatTelephone', function(croatianConstants){
+    return function(input) {
+        if (input && input.length > 0 && input !== 'NULL') {
+            return (input.length === 4) ? input + ' (' + croatianConstants.countryPrefix + croatianConstants.companyTelephonePrefixPattern + input.substring(1) + ')' : input;
+        } else {
+            return '-';
+        }
+    };
+});
+
+imenik.filter('formatText', function($sce){
+    return function(input, additionalText) {
+        return $sce.trustAsHtml(input && input !== '-' ? additionalText + '<span class="bold">' + input + '</span> &nbsp;&nbsp;' : '');
+    };
 });

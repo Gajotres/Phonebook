@@ -7,12 +7,27 @@ public class Employees {
 	private String firstName;
 	
 	private String lastName;
+	
+	private String organizationName;
+	
+	private String subOrganizationName;
+	
+	private String mobilephoneNumber;
 
-	public Employees(int id, String firstName, String lastName) {
+	private String telephoneNumber;
+	
+	private String smallImage;	
+
+	public Employees(int id, String firstName, String lastName, String organizationName, String subOrganizationName, String mobilephoneNumber, String telephoneNumber, String smallImage) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.organizationName = organizationName;
+		this.subOrganizationName = subOrganizationName;
+		this.mobilephoneNumber = mobilephoneNumber;
+		this.telephoneNumber = telephoneNumber;
+		this.smallImage = smallImage;
 	}
 
 	public int getId() {
@@ -38,4 +53,44 @@ public class Employees {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
+
+	public String getSubOrganizationName() {
+		return subOrganizationName;
+	}
+
+	public void setSubOrganizationName(String subOrganizationName) {
+		this.subOrganizationName = subOrganizationName;
+	}
+	
+	public String getMobilephoneNumber() {
+		return mobilephoneNumber;
+	}
+
+	public void setMobilephoneNumber(String mobilephoneNumber) {
+		this.mobilephoneNumber = mobilephoneNumber;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+	public String getSmallImage() {
+		return smallImage;
+	}
+
+	public void setSmallImage(String smallImage) {
+		this.smallImage = smallImage;
+	}	
 }

@@ -67,13 +67,13 @@ public class Employee {
 	@Column(name="telefon", length=64, nullable=true)
 	private String telephoneNumber;
 	
-	/*@Column(length=1000000)
+	@Column(length=1000000)
 	@Lob
 	private String image;
 
 	@Column(length=1000000)
 	@Lob
-	private String smallImage;*/	
+	private String smallImage;	
 
 	public int getId() {
 		return id;
@@ -203,7 +203,7 @@ public class Employee {
 		this.telephoneNumber = telephoneNumber;
 	}
 
-	/*public String getImage() {
+	public String getImage() {
 		return image;
 	}
 
@@ -217,6 +217,6 @@ public class Employee {
 
 	public void setSmallImage(String smallImage) {
 		this.smallImage = smallImage;
-	}	*/
+	}
 		
 }
