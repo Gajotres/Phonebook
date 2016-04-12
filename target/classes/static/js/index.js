@@ -1,7 +1,7 @@
-var imenik = angular.module('imenik', ['ngRoute']);
+var imenik = angular.module('imenik', ['ngRoute','ngMaterial']);
 
 imenik.run(function($rootScope) {
-    $.material.init();
+    //
 });
 
 imenik.config(function($routeProvider) {
@@ -20,7 +20,7 @@ imenik.config(function($routeProvider) {
 });
 
 imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees) {
-     
+
 });
 
 imenik.controller('EmployeeInfoCtrl', function($scope, $routeParams, Employees) {

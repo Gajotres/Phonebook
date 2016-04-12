@@ -1,12 +1,12 @@
 package controller;
  
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import service.EmployeeService;
 import model.Employee;
 import dao.EmployeeDao;
@@ -21,21 +21,25 @@ public class EmployeeController {
     @Autowired
     EmployeeDao eDao;    
     
+    @CrossOrigin()
     @RequestMapping("/all")
     public Iterable<Employee> getAll () {
         return eDao.findAll();
     }
     
+    @CrossOrigin()
     @RequestMapping("/id/{id}")
     public Employee getEmployeeById (@PathVariable("id") int id) {
         return eDao.findById(id);
     }    
-     
-    @RequestMapping("/term/{term}")
+    
+    @CrossOrigin()
+    @RequestMapping(value = "/term/{term}", produces = "application/json")
     public Iterable<Employee> getEmployee(@PathVariable("term") String term) {
     	return eDao.findEmployeesBySearchTerm(term, term, term, term, term, term, term, term, term);
     }
     
+    @CrossOrigin()
     @RequestMapping("/update")
     @ResponseBody
     public String updateMobileTelephoneNumber(long id, String mobilephoneNumber, String telephoneNumber) {

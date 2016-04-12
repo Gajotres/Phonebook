@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 public class Employee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@Column(name="id_organizacije", nullable=true)
