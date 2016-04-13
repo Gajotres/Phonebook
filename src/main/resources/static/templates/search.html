@@ -10,10 +10,10 @@
           <md-content class="md-padding">
             <md-input-container style="width: 100%;">
               <label>Upišite pojam</label>
-              <input type="text" ng-model="input.term">
+              <input type="text" ng-model="input.term" ng-enter="findEmployeesByTerm()">
             </md-input-container>
             <div style="width: 100%;">
-              <md-button class="md-raised md-warn" style="padding: 7px 10px; margin: 0 auto; display: block !important;" ng-click="findEmployeesByTerm()">Započni pretragu</md-button>
+              <md-button class="md-raised md-warn" style="padding: 3px 10px; margin: 0 auto; display: block !important;" ng-click="findEmployeesByTerm()">Započni pretragu</md-button>
             </div>
             
           </md-content>
@@ -43,26 +43,22 @@
         <div flex-gt-sm="50" flex>
           <md-content>
             <md-list flex>
-              <md-divider ng-show="employees.length > 0"></md-divider>
-              <!--ng-show="employees.length > 0"           ng-if="x.id === sub"-->
-              <div ng-repeat="letter in letters">
-                <div ng-repeat="employee in employees">
-                  <md-subheader class="md-no-sticky" ng-if="dividerHandler(employee, letter)">{{letter}}</md-subheader>
-                  <md-list-item class="md-3-line" ng-click="null" ng-if="employee.lastName.charAt(0).toUpperCase() === letter">
-                    <img ng-src="data:image/png;base64,{{employee.smallImage}}" class="md-avatar"/>
-                    <div class="md-list-item-text" layout="column">
-                      <h3 class="bold">{{ employee.firstName }} {{ employee.lastName }}</h3>
-                      <h4>{{ employee.organizationName }} {{ employee.subOrganizationName }}</h4>
-                      <h4>
-                        <span ng-bind-html="employee.telephoneNumber | formatTelephone | formatText: 'TELEFON: '"></span>
-                        <span ng-bind-html="employee.mobilephoneNumber | formatMobile | formatText: 'MOBITEL: '"></span>
-                      </h4>
-                    </div>
-                    <md-divider ></md-divider>
-                  </md-list-item>
-                </div>
+              <div ng-repeat="sortedByLetter in formatedEmployees">
+                <md-divider style="margin-top: 10px;"></md-divider>
+                <md-subheader class="md-no-sticky" style="margin-bottom: 10px;">{{sortedByLetter.letter}}</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="employee in sortedByLetter.employee" ng-click="null" >
+                  <img ng-src="data:image/png;base64,{{employee.smallImage}}" class="md-avatar"/>
+                  <div class="md-list-item-text" layout="column">
+                    <h3 class="bold" ng-click="changePage(employee.id);">{{ employee.firstName }} {{ employee.lastName }}</h3>
+                    <h4>{{ employee.organizationName }} {{ employee.subOrganizationName }}</h4>
+                    <h4>
+                      <span ng-bind-html="employee.telephoneNumber | formatTelephone | formatText: 'TELEFON: '"></span>
+                      <span ng-bind-html="employee.mobilephoneNumber | formatMobile | formatText: 'MOBITEL: '"></span>
+                    </h4>
+                  </div>
+                </md-list-item>
               </div>
-            </md-list>      
+            </md-list>
           </md-content>
         </div>
       </div>

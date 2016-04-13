@@ -1,2 +1,6 @@
-/model/
+/META-INF/
+/com/
+/controller/
 /dao/
+/model/
+/service/

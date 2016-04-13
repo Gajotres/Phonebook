@@ -2,12 +2,21 @@ html {
 	background-color: #fff;
 }
 
+*:focus {
+    outline: none;
+}
+
 .bold {
 	font-weight: bold !important;
 }
 
 .navbar {
 	border-radius: 0;
+	margin-bottom: 0;
+	background-color: #b83e2c;
+	border-top: 1px solid #b83e2c;
+	border-left: 1px solid #b83e2c;
+	border-right: 1px solid #b83e2c;
 }
 
 /* Tab changes */
@@ -37,7 +46,37 @@ md-list-item ._md-list-item-inner .md-avatar, md-list-item .md-avatar {
 	color: rgba(0,0,0,0.67) !important;
 }
 
+md-list md-list-item button.md-button:not([disabled]):hover {
+    background-color: rgba(255,255,255,0.1);
+}
 
+._md-subheader-content span {
+	font-size: 18px;
+    color: #C5C5C5;
+    text-shadow: 0 1px 0 #555;
+}
+
+.md-subheader {
+	background: url('../img/small_logo.jpg') no-repeat center right;
+	padding: 10px 10px;
+}
+
+md-divider.md-default-theme, md-divider {
+    border-top-color: rgba(0,0,0,0.04);
+}
+
+md-list-item .md-button {
+	display: none;
+}
+
+.md-list-item-text {
+    -webkit-user-select: all;
+    -moz-user-select: all; 
+    -ms-user-select: all; 
+    user-select: all; 
+}
+
+/* Input changes */
 
 md-input-container:not(.md-input-invalid).md-input-focused .md-input {
     border-color: rgba(0,0,0,0.27);
@@ -45,4 +84,53 @@ md-input-container:not(.md-input-invalid).md-input-focused .md-input {
 
 .md-input-focused label {
 	color: #ecb6ae !important; 
+}
+
+md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme ._md-placeholder, md-input-container ._md-placeholder {
+	font-weight: 300;
+	font-size: 12px;
+}
+
+/* INFO PAGE */
+
+.info-top-header {
+    height: 350px;
+    background: transparent url('../img/info_top_background.jpg') no-repeat center center;   
+    background-size: cover;
+}
+
+.info-top-header > .row {
+    height: 350px;    
+    background: rgba(0,0,0,.64);
+}
+
+.employee-image {
+    width: 200px;
+    height: 200px;
+    margin-top: 30px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.employee-data-firstrow, .employee-data-secondrow {
+    height: 35px;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    text-shadow: -1px -1px 2px rgba(0, 0, 0, 1);
+}
+
+.employee-data-firstrow {
+   margin-bottom: 5px;    
+}    
+
+.employee-data-secondrow {
+    font-size: 16px;
+    color: #ccc;    
+}
+
+.sub-info-header {
+    height: 25px;    
+    background-color: #b83e2c;
+    border-top: 1px solid white;
 }

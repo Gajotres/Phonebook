@@ -1,3 +1,16 @@
 <div class="container-fluid">
-  2
+    <div class="row info-top-header">    
+        <div class="row" style="margin:0;">
+            <div class="row" style="margin:0;">
+                <div class="center-block placeholder image-placeholder" style="width: 206px; height: 206px;position: relative;">
+                    <img ng-src="data:image/png;base64,{{employee.image}}"  onerror="this.src = 'css/img/dummy_user.jpg';" class="employee-image center-block"/>                 
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="col-md-12 employee-data-firstrow">{{employee.firstName}} {{employee.lastName}}</div>
+                <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.organizationName}} {{employee.subOrganizationName}}</div>
+                <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.jobTitle}}</div>                
+            </div>  
+        </div>
+    </div>  
 </div>	

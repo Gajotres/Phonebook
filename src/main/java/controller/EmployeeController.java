@@ -36,7 +36,7 @@ public class EmployeeController {
     @CrossOrigin()
     @RequestMapping(value = "/term/{term}", produces = "application/json")
     public Iterable<Employee> getEmployee(@PathVariable("term") String term) {
-    	return eDao.findEmployeesBySearchTerm(term);
+    	return  eDao.findEmployeesBySearchTerm(term);
     }
     
     @CrossOrigin()
