@@ -21,7 +21,8 @@ imenik.config(function($routeProvider) {
 
 imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees, croatianConstants) {
 
-    $scope.letters = [];
+    $scope.letters = croatianConstants.letters.split(' ');
+    $scope.usedLetters = [];
     $scope.employees = [];
     $scope.organizations = {};  
 
@@ -34,7 +35,7 @@ imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees, cr
     // Fill Letters selectbox
     var counter = 0;
 
-    angular.forEach(croatianConstants.letters.split(" "), function(value){
+    angular.forEach($scope.letters, function(value){
          $scope.letters.push({id: counter++, name : value});
     });    
     $scope.selectedLetter = { id: 1, name: 'A' };
@@ -51,7 +52,40 @@ imenik.controller('SearchListCtrl', function($scope, $routeParams, Employees, cr
                 $scope.employees = employees;
             });            
         }
-    };    
+    };
+
+    $scope.dividerHandler = function(employee, letter) {
+
+
+
+
+
+        if(typeof letter !== 'object') {
+
+        console.log(letter);
+
+            if(contains.call($scope.usedLetters, letter)) {
+                return false;
+            } else {
+                $scope.usedLetters.push(letter);
+                return true;
+            }
+        }
+
+
+
+        /*var myArray = [0,1,2];
+        var needle = 1;
+        var index = contains.call(myArray, needle); // true*/
+
+        /*angular.forEach($scope.employees, function(loopEmployee, key) {
+          if(employee.lastName == loopEmployee.lastName) {
+            console.log(employee.lastName);
+          }
+        });
+
+        return employee.lastName.charAt(0).toUpperCase() === letter;*/
+    }    
 });
 
 imenik.controller('EmployeeInfoCtrl', function($scope, $routeParams, Employees) {
