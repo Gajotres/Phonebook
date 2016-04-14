@@ -52,8 +52,8 @@ md-list md-list-item button.md-button:not([disabled]):hover {
 
 ._md-subheader-content span {
 	font-size: 18px;
-    color: #C5C5C5;
-    text-shadow: 0 1px 0 #555;
+    color: rgba(0,0,0,0.60) !important;
+    font-weight: bold;
 }
 
 .md-subheader {
@@ -74,6 +74,10 @@ md-list-item .md-button {
     -moz-user-select: all; 
     -ms-user-select: all; 
     user-select: all; 
+}
+
+.no-background {
+	background: #fff;
 }
 
 /* Input changes */

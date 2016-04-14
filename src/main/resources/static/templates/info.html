@@ -1,16 +1,107 @@
 <div class="container-fluid">
-    <div class="row info-top-header">    
-        <div class="row" style="margin:0;">
-            <div class="row" style="margin:0;">
-                <div class="center-block placeholder image-placeholder" style="width: 206px; height: 206px;position: relative;">
-                    <img ng-src="data:image/png;base64,{{employee.image}}"  onerror="this.src = 'css/img/dummy_user.jpg';" class="employee-image center-block"/>                 
-                </div>
-            </div>
-            <div class="row" style="margin:0;">
-                <div class="col-md-12 employee-data-firstrow">{{employee.firstName}} {{employee.lastName}}</div>
-                <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.organizationName}} {{employee.subOrganizationName}}</div>
-                <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.jobTitle}}</div>                
-            </div>  
+  <div class="row info-top-header">    
+    <div class="row" style="margin:0;">
+      <div class="row" style="margin:0;">
+        <div class="center-block placeholder image-placeholder" style="width: 206px; height: 206px;position: relative;">
+          <img ng-src="data:image/png;base64,{{employee.image}}"  onerror="this.src = 'img/dummy_user.jpg';" class="employee-image center-block"/>                 
         </div>
-    </div>  
+      </div>
+      <div class="row" style="margin:0;">
+        <div class="col-md-12 employee-data-firstrow">{{employee.firstName}} {{employee.lastName}}</div>
+        <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.organizationName}} {{employee.subOrganizationName}}</div>
+        <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.jobTitle}}</div>                
+      </div>  
+    </div>
+  </div>  
+
+  <div class="row">
+    <div class="col-md-3 col-lg-3 col-xl-3 visible-md-block visible-lg-block"></div>
+    <div class="col-md-6 col-lg-6 col-xl-6">
+
+
+      <div ng-cloak layout-gt-sm="row" layout="column">
+        <div flex-gt-sm="50" flex>
+          <md-content>
+            <md-subheader class="md-no-sticky no-background">Podaci o zaposleniku</md-subheader>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">person_outline</md-icon>
+              <div class="md-list-item-text">
+                <h3> IME I PREZIME: </h3>
+                <p> {{employee.firstName}} {{employee.lastName}}</p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">view_carousel</md-icon>
+              <div class="md-list-item-text">
+                <h3> ORGANIZACIJSKA JEDINICA: </h3>
+                <p> {{employee.organizationName}} </p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">view_column</md-icon>
+              <div class="md-list-item-text">
+                <h3> PODORGANIZACIJSKA JEDINICA: </h3>
+                <p> {{employee.subOrganizationName}} </p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">domain</md-icon>
+              <div class="md-list-item-text">
+                <h3> RADNO MJESTO: </h3>
+                <p> {{employee.jobTitle}} </p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">place</md-icon>
+              <div class="md-list-item-text">
+                <h3> LOKACIJA: </h3>
+                <p> {{employee.location}} </p>
+              </div>
+            </md-list-item>                                                
+
+          </md-content>
+        </div>
+
+        <div flex-gt-sm="50" flex>
+          <md-content>
+            <md-subheader class="md-no-sticky no-background">Kontakt podaci</md-subheader>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">call</md-icon>
+              <div class="md-list-item-text">
+                <h3> TELEFON: </h3>
+                <p> {{employee.telephoneNumber}} </p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">stay_primary_portrait</md-icon>
+              <div class="md-list-item-text">
+                <h3> MOBITEL: </h3>
+                <p> {{employee.mobilephoneNumber}} </p>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-2-line custom-list">
+              <md-icon md-font-library="material-icons" style="width: 48px !important; height: 48px !important; font-size: 48px;">mail_outline</md-icon>
+              <div class="md-list-item-text">
+                <h3> EMAIL: </h3>
+                <p> {{employee.email}} </p>
+              </div>
+            </md-list-item>            
+
+          </md-content>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-md-3 col-lg-3 col-xl-3 visible-md-block visible-lg-block"></div>
+  </div>
+
 </div>	

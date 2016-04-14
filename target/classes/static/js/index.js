@@ -139,28 +139,10 @@ imenik.controller('EmployeeInfoCtrl', [
     '$routeParams',
     'Employees',
     function ($scope, $routeParams, Employees) {
-
-        $scope.showUnimportantFields = {
-            showTitleNeobavezno : false,
-            privateMail: false,
-            accountFacebook: false,
-            accountTwitter: false,
-            accountLinkedIn: false,
-            employeeSince: false,
-            vacationFrom: false,
-            vacationUntil: false
-        };        
-        
+            
         Employees.find($routeParams.zaposlenikid, function(employee) {
             $scope.employee = employee;
-            
-            /*$scope.showUnimportantFields.showTitleNeobavezno = ($scope.employee.facebook || $scope.employee.twitter || $scope.employee.linkedin || $scope.employee.email_private) ? true : false;
-            $scope.showUnimportantFields.accountFacebook     = ($scope.employee.facebook) ? true : false;
-            $scope.showUnimportantFields.accountTwitter      = ($scope.employee.twitter) ? true : false;
-            $scope.showUnimportantFields.accountLinkedIn     = ($scope.employee.linkedin) ? true : false;
-            $scope.showUnimportantFields.privateMail         = ($scope.employee.email_private) ? true : false;*/
         });
-
     }
 ]);
 
