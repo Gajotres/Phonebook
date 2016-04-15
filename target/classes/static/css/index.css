@@ -3,13 +3,13 @@
   font-family: 'Ubuntu Condensed';
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/ubuntu-condensed-v7-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/ubuntu-condensed-v7-latin-regular.eot'); /* IE9 Compat Modes */
   src: local('Ubuntu Condensed'), local('UbuntuCondensed-Regular'),
-       url('fonts/ubuntu-condensed-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/ubuntu-condensed-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/ubuntu-condensed-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('fonts/ubuntu-condensed-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/ubuntu-condensed-v7-latin-regular.svg#UbuntuCondensed') format('svg'); /* Legacy iOS */
+       url('../fonts/ubuntu-condensed-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/ubuntu-condensed-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/ubuntu-condensed-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/ubuntu-condensed-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/ubuntu-condensed-v7-latin-regular.svg#UbuntuCondensed') format('svg'); /* Legacy iOS */
 }
 
 /* open-sans-regular - latin */
@@ -17,13 +17,13 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/open-sans-v13-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/open-sans-v13-latin-regular.eot'); /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans'),
-       url('fonts/open-sans-v13-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/open-sans-v13-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/open-sans-v13-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('fonts/open-sans-v13-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/open-sans-v13-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+       url('../fonts/open-sans-v13-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/open-sans-v13-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/open-sans-v13-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/open-sans-v13-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/open-sans-v13-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
 }
 
 html {
@@ -79,7 +79,7 @@ md-list md-list-item button.md-button:not([disabled]):hover {
 }
 
 ._md-subheader-content span {
-	font-size: 18px;
+	  font-size: 18px;
     color: rgba(0,0,0,0.60) !important;
     font-weight: bold;
 }
@@ -87,6 +87,12 @@ md-list md-list-item button.md-button:not([disabled]):hover {
 .md-subheader {
 	background: url('../img/small_logo.jpg') no-repeat center right;
 	padding: 10px 10px;
+}
+
+.search-subheader > div > span > span {
+  font: 20px 'Roboto', Arial, sans-serif !important;   
+  color: #E5E5E5 !important;
+  text-shadow: 0 1px 0 #999;
 }
 
 md-divider.md-default-theme, md-divider {
@@ -115,7 +121,7 @@ md-list-item .md-button {
 
 .custom-list p {
 	font-family: 'Open Sans', Arial, sans-serif !important;
-	font-size: 18px !important;
+	font-size: 16px !important;
 	color: rgba(0,0,0,0.97) !important;
 	line-height: 1.4em !important;
 }
@@ -182,6 +188,10 @@ md-input-container.md-default-theme label, md-input-container label, md-input-co
     border-top: 1px solid white;
 }
 
+.col-centered button {
+  float: right;
+}
+
 /* Info center column */
 
 .row-centered {
@@ -190,21 +200,16 @@ md-input-container.md-default-theme label, md-input-container label, md-input-co
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
     margin-right:-4px;
 }
 
 .col-fixed {
-    /* custom width */
     width:800px;
 }
 .col-min {
-    /* custom min width */
     min-width:800px;
 }
 .col-max {
-    /* custom max width */
     max-width:800px;
 }
