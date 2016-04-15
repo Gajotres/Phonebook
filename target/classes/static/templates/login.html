@@ -4,25 +4,29 @@
 
 <div class="row row-centered" style="margin-top: 250px;">
   <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
+    <div class="phonebook-title" style="margin-bottom: 50px;">
+      Autorizacija
+      <div style="width: 120px; height: 5px; border-bottom: 1px solid #c12017; margin: 0 auto;"></div>
+    </div>  
     <md-content layout-padding>
-      <form name="projectForm">
+      <form name="projectForm" autocomplete="new-password">
         <md-input-container class="md-block">
-          <label>Username:</label>
-          <input md-maxlength="30" required md-no-asterisk name="description" ng-model="authorization.userName">
+          <label>Korisničko ime:</label>
+          <input md-maxlength="30" required md-no-asterisk name="description" ng-model="authorization.userName" autocomplete="new-password">
           <div ng-messages="projectForm.description.$error">
-            <div ng-message="required">This is required.</div>
-            <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+            <div ng-message="required">Ovo polje je neophodne!</div>
+            <div ng-message="md-maxlength">Ime mora sadržavati 30 ili manje znakova!</div>
           </div>
         </md-input-container>
         <md-input-container class="md-block">
-          <label>Username:</label>
-          <input type="password" required name="clientName" ng-model="authorization.password">
+          <label>Lozinka:</label>
+          <input type="password" required name="clientName" ng-model="authorization.password" autocomplete="new-password">
           <div ng-messages="projectForm.clientName.$error">
-            <div ng-message="required">This is required.</div>
+            <div ng-message="required">Ovo polje je neophodne!</div>
           </div>
         </md-input-container>
         <div style="width: 100%;">
-          <md-button ng-click="authenticate()" class="md-raised" style="margin: 0 auto; display: block !important; float: none !important;">Login</md-button>
+          <md-button ng-click="authenticate()" class="md-raised" ng-disabled="!projectForm.$valid" style="margin: 0 auto; display: block !important; float: none !important;">Login</md-button>
         </div>  
       </form>
     </md-content>
