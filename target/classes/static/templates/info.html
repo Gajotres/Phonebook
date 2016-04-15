@@ -20,7 +20,7 @@
       <div ng-cloak layout-gt-sm="row" layout="column">
         <div flex-gt-sm="50" flex>
           <md-content>
-            <md-subheader class="md-no-sticky no-background">Podaci o zaposleniku:</md-subheader>
+            <md-subheader class="md-no-sticky no-background"></md-subheader>
 
             <md-list-item class="md-2-line custom-list">
               <md-icon md-font-library="material-icons" style="width: 36px !important; height: 36px !important; font-size: 36px;">person_outline</md-icon>
@@ -67,7 +67,7 @@
 
         <div flex-gt-sm="50" flex>
           <md-content>
-            <md-subheader class="md-no-sticky no-background">Kontakt podaci:</md-subheader>
+            <md-subheader class="md-no-sticky no-background"></md-subheader>
 
             <md-list-item class="md-2-line custom-list">
               <md-icon md-font-library="material-icons" style="width: 36px !important; height: 36px !important; font-size: 36px;">call</md-icon>
@@ -101,8 +101,8 @@
 
   <div class="row row-centered" style="margin-top: 50px;">
     <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
-      <md-button class="md-warn">Prijavi netočne podatke</md-button>
-      <md-button>Izmijeni podatke</md-button>      
+      <md-button class="md-warn" ng-click="alert('sdfsds');">Prijavi netočne podatke</md-button>
+      <md-button ng-href="#/update">Izmijeni podatke</md-button> 
     </div>
   </div>  
 

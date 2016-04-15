@@ -26,6 +26,20 @@
        url('../fonts/open-sans-v13-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
 }
 
+/* dosis-regular - latin */
+@font-face {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/dosis-v4-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Dosis Regular'), local('Dosis-Regular'),
+       url('../fonts/dosis-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/dosis-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/dosis-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/dosis-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/dosis-v4-latin-regular.svg#Dosis') format('svg'); /* Legacy iOS */
+}
+
 html {
 	background-color: #fff;
 }
@@ -34,17 +48,27 @@ html {
     outline: none;
 }
 
+/* Fix for a Angular Material password input field directive */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+    background-color: #FFFFFF !important;
+    color: #555 !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #555555 !important;
+}
+
 .bold {
 	font-weight: bold !important;
 }
 
-.navbar {
-	border-radius: 0;
-	margin-bottom: 0;
-	background-color: #b83e2c;
-	border-top: 1px solid #b83e2c;
-	border-left: 1px solid #b83e2c;
-	border-right: 1px solid #b83e2c;
+/* Title */
+
+.phonebook-title {
+   font-size: 72px;
+   font-family: 'Dosis', "Helvetica Neue",Helvetica,Arial,sans-serif;  
+   text-align: center;
 }
 
 /* Tab changes */
@@ -85,14 +109,23 @@ md-list md-list-item button.md-button:not([disabled]):hover {
 }
 
 .md-subheader {
-	background: url('../img/small_logo.jpg') no-repeat center right;
 	padding: 10px 10px;
 }
 
-.search-subheader > div > span > span {
-  font: 20px 'Roboto', Arial, sans-serif !important;   
-  color: #E5E5E5 !important;
-  text-shadow: 0 1px 0 #999;
+.search-header-results {
+  height: 40px;
+  background: #f0f0f0;
+  padding: 10px 10px;
+  border-top: 2px solid #c12017;  
+}
+
+.md-subheader ._md-subheader-inner {
+      padding: 2px 2px 2px 30px;
+}
+
+.md-subheader ._md-subheader-inner span span {
+  font-weight: normal;
+  color: #545355 !important;
 }
 
 md-divider.md-default-theme, md-divider {
@@ -129,7 +162,7 @@ md-list-item .md-button {
 /* Input changes */
 
 md-input-container:not(.md-input-invalid).md-input-focused .md-input {
-    border-color: rgba(0,0,0,0.27);
+  border-color: rgba(0,0,0,0.27);
 }
 
 .md-input-focused label {
@@ -188,7 +221,7 @@ md-input-container.md-default-theme label, md-input-container label, md-input-co
     border-top: 1px solid white;
 }
 
-.col-centered button {
+.col-centered button, .col-centered a {
   float: right;
 }
 

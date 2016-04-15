@@ -1,0 +1,30 @@
+<div class="alert alert-danger" ng-show="controller.error">
+  There was a problem logging in. Please try again.
+</div>
+
+<div class="row row-centered" style="margin-top: 250px;">
+  <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
+    <md-content layout-padding>
+      <form name="projectForm">
+        <md-input-container class="md-block">
+          <label>Username:</label>
+          <input md-maxlength="30" required md-no-asterisk name="description" ng-model="project.description">
+          <div ng-messages="projectForm.description.$error">
+            <div ng-message="required">This is required.</div>
+            <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Username:</label>
+          <input type="password" required name="clientName" ng-model="project.clientName">
+          <div ng-messages="projectForm.clientName.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        <div style="width: 100%;">
+          <md-button ng-click="authenticate()" class="md-raised" style="margin: 0 auto; display: block !important; float: none !important;">Login</md-button>
+        </div>  
+      </form>
+    </md-content>
+  </div>
+</div>  

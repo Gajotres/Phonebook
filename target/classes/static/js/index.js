@@ -1,10 +1,18 @@
-var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter']);
+var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter', 'ngMessages']);
 
-imenik.run(function($rootScope) {
-    //
+imenik.run(function($rootScope, $location) {
+  $rootScope.$on("$routeChangeSuccess", function(userInfo) {
+    console.log(userInfo);
+  });
+
+  $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
+    if (eventObj.authenticated === false) {
+      $location.path("/login");
+    }
+  });
 });
 
-imenik.config(function($routeProvider, $locationProvider) {
+imenik.config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
     when('/', {
         templateUrl: 'templates/search.html',
@@ -14,10 +22,30 @@ imenik.config(function($routeProvider, $locationProvider) {
         templateUrl: 'templates/info.html',
         controller: 'EmployeeInfoCtrl'
     })
+    .when('/login', {
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl'
+    })   
+    .when('/update', {
+        templateUrl: 'templates/update.html',
+        controller: 'UpdateCtrl',
+        resolve: {
+            auth: ["$q", "authenticationService", function($q, authenticationService) {
+                var userInfo = authenticationService.getUserInfo();
+
+                if (userInfo) {
+                    return $q.when(userInfo);
+                } else {
+                    return $q.reject({ authenticated: false });
+                }
+            }]
+        }        
+    })     
     .otherwise({
         redirectTo: '/'
     }); 
 
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     //$locationProvider.html5Mode(true);  
 });
 
@@ -126,6 +154,11 @@ imenik.controller('SearchListCtrl', [
             $location.path('/zaposlenik/' + id);
         }
 
+        $scope.updateData = function() {
+            alert('sdfgsd');
+            $location.path('/update');
+        }        
+
         // Reload data when route changes from EmployeeInfoCtrl to SearchListCtrl; data is reloaded from the Service Storage 
         if(!$scope.input.term){
             $scope.input.term = Storage.getSearchTerm();
@@ -147,6 +180,22 @@ imenik.controller('EmployeeInfoCtrl', [
 ]);
 
 imenik.controller('HeaderCtrl', [
+    '$scope',
+    function ($scope, $routeParams) {
+
+    }
+]);
+
+imenik.controller('LoginCtrl', [
+    '$scope',
+    function ($scope, $routeParams) {
+        $scope.authenticate = function() {
+            alert('sdfsd');
+        }
+    }
+]);
+
+imenik.controller('UpdateCtrl', [
     '$scope',
     function ($scope, $routeParams) {
 
@@ -211,6 +260,39 @@ imenik.factory('Storage', function() {
     };    
 });
 
+imenik.factory("authenticationService", function($http, $q, $window) {
+  var userInfo;
+
+  function login(userName, password) {
+    var deferred = $q.defer();
+
+    $http.post("/employees/login", {
+      userName: userName,
+      password: password
+    }).then(function(result) {
+      userInfo = {
+        accessToken: result.data.access_token,
+        userName: result.data.userName
+      };
+      $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+      deferred.resolve(userInfo);
+    }, function(error) {
+      deferred.reject(error);
+    });
+
+    return deferred.promise;
+  }
+
+  function getUserInfo() {
+    return userInfo;
+  }  
+
+  return {
+    login: login,
+    getUserInfo: getUserInfo
+  };
+});
+
 /* TODO: Testirati da li je potrebno provjeravati i duljinu input stringa */
 imenik.filter('formatMobile', function(croatianConstants){
     return function(input) {
@@ -254,5 +336,19 @@ imenik.directive('ngEnter', function () {
                 event.preventDefault();
             }
         });
+    };
+});
+
+/* Fix for a Angular Material password input field directive */
+imenik.directive('mdInputContainer', function($timeout) {
+    return function($scope, element) {
+        var ua = navigator.userAgent;
+        if (ua.match(/chrome/i) && !ua.match(/edge/i)) {
+            $timeout(function() {
+                if (element[0].querySelector('input[type=password]:-webkit-autofill')) {
+                    element.addClass('md-input-has-value');
+                }
+            }, 100);
+        }
     };
 });

@@ -1,10 +1,14 @@
 <div class="container">
-  <div class="row" style="margin: 30px 0;">
+  <div class="row" style="margin: 10px 0;">
 
   </div>	
   <div class="row">
     <div class="col-md-2 col-lg-2 visible-md-block visible-lg-block"></div>
-    <div class="col-md-8 col-lg-8" style="padding-top: 20px;">
+    <div class="col-md-8 col-lg-8">
+      <div class="phonebook-title" style="margin-bottom: 50px;">
+        Imenik
+        <div style="width: 120px; height: 5px; border-bottom: 1px solid #c12017; margin: 0 auto;"></div>
+      </div>
       <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always">
         <md-tab label="Prema broju">
           <md-content class="md-padding">
@@ -13,7 +17,7 @@
               <input type="text" ng-model="input.term" ng-enter="findEmployeesByTerm()">
             </md-input-container>
             <div style="width: 100%;">
-              <md-button class="md-raised md-warn" style="padding: 3px 10px; margin: 0 auto; display: block !important;" ng-click="findEmployeesByTerm()">Započni pretragu</md-button>
+              <md-button class="md-raised md-warn" style="padding: 3px 10px; margin: 0 auto; display: block !important; background: #c12017;" ng-click="findEmployeesByTerm()">Započni pretragu</md-button>
             </div>
             
           </md-content>
@@ -45,7 +49,7 @@
             <md-list flex>
               <div ng-repeat="sortedByLetter in formatedEmployees">
                 <md-divider style="margin-top: 10px;"></md-divider>
-                <md-subheader class="md-no-sticky search-subheader" style="margin-bottom: 10px;">(   {{sortedByLetter.letter}}   )</md-subheader>
+                <md-subheader class="md-no-sticky search-header-results" style="margin-bottom: 10px;">{{sortedByLetter.letter}}</md-subheader>
                 <md-list-item class="md-3-line" ng-repeat="employee in sortedByLetter.employee" ng-click="null" >
                   <img ng-src="data:image/png;base64,{{employee.smallImage}}" class="md-avatar"/>
                   <div class="md-list-item-text" layout="column">
