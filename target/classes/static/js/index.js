@@ -1,8 +1,8 @@
-var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter', 'ngMessages']);
+var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter','ngMessages']);
 
 imenik.run(function($rootScope, $location) {
-  $rootScope.$on("$routeChangeSuccess", function(userInfo) {
-    console.log(userInfo);
+  $rootScope.$on("$routeChangeSuccess", function(authorization) {
+    //console.log(authorization);
   });
 
   $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
@@ -12,7 +12,7 @@ imenik.run(function($rootScope, $location) {
   });
 });
 
-imenik.config(function($routeProvider, $locationProvider, $httpProvider) {
+imenik.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
         templateUrl: 'templates/search.html',
@@ -30,8 +30,8 @@ imenik.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'templates/update.html',
         controller: 'UpdateCtrl',
         resolve: {
-            auth: ["$q", "authenticationService", function($q, authenticationService) {
-                var userInfo = authenticationService.getUserInfo();
+            auth: ["$q", "Authentication", function($q, Authentication) {
+                var userInfo = Authentication.getUserInfo();
 
                 if (userInfo) {
                     return $q.when(userInfo);
@@ -39,13 +39,12 @@ imenik.config(function($routeProvider, $locationProvider, $httpProvider) {
                     return $q.reject({ authenticated: false });
                 }
             }]
-        }        
+        }
     })     
     .otherwise({
         redirectTo: '/'
     }); 
 
-    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     //$locationProvider.html5Mode(true);  
 });
 
@@ -179,19 +178,31 @@ imenik.controller('EmployeeInfoCtrl', [
     }
 ]);
 
+imenik.controller('LoginCtrl', [
+    '$scope',
+    '$routeParams',
+    'Employees',
+    'Authentication',
+    '$location',
+    function ($scope, $routeParams, Employees, Authentication, $location) {
+        
+        $scope.authorization = {
+            userName: '',
+            password: ''
+        }
+
+        $scope.authenticate = function() {
+            Authentication.login($scope.authorization.userName, $scope.authorization.password).then(function(response) {
+                $location.path("/update");
+            });
+        }
+    }
+]);
+
 imenik.controller('HeaderCtrl', [
     '$scope',
     function ($scope, $routeParams) {
 
-    }
-]);
-
-imenik.controller('LoginCtrl', [
-    '$scope',
-    function ($scope, $routeParams) {
-        $scope.authenticate = function() {
-            alert('sdfsd');
-        }
     }
 ]);
 
@@ -260,22 +271,28 @@ imenik.factory('Storage', function() {
     };    
 });
 
-imenik.factory("authenticationService", function($http, $q, $window) {
-  var userInfo;
+imenik.factory('Authentication', function($http, $q, $window) {
+  var authorization;
 
-  function login(userName, password) {
+  function login(userName, password, callback) {
     var deferred = $q.defer();
 
-    $http.post("/employees/login", {
+    $http.post("http://localhost:8080/user/authorize", {
       userName: userName,
-      password: password
+      password: sha256_digest(password)
     }).then(function(result) {
-      userInfo = {
-        accessToken: result.data.access_token,
-        userName: result.data.userName
+
+      authorization = {
+        status: result.data
       };
-      $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-      deferred.resolve(userInfo);
+
+      if(authorization.status) {
+        $window.sessionStorage["authorization"] = JSON.stringify(authorization);
+        deferred.resolve(authorization);          
+      } else {
+        deferred.reject(null);
+      }
+
     }, function(error) {
       deferred.reject(error);
     });
@@ -284,7 +301,7 @@ imenik.factory("authenticationService", function($http, $q, $window) {
   }
 
   function getUserInfo() {
-    return userInfo;
+    return authorization;
   }  
 
   return {
