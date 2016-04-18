@@ -7,15 +7,15 @@
         </div>
       </div>
       <div class="row" style="margin:0;">
-        <div class="col-md-12 employee-data-firstrow">{{employee.firstName}} {{employee.lastName}}</div>
-        <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;">{{employee.organizationName}} {{employee.subOrganizationName}}</div>
-        <div class="col-md-12 employee-data-secondrow" style="text-transform: capitalize;margin-top: -10px;">{{employee.jobTitle}}</div>                
+        <div class="col-md-24 employee-data-firstrow">{{employee.firstName}} {{employee.lastName}}</div>
+        <div class="col-md-24 employee-data-secondrow" style="text-transform: capitalize;">{{employee.organizationName}} {{employee.subOrganizationName}}</div>
+        <div class="col-md-24 employee-data-secondrow" style="text-transform: capitalize;margin-top: -10px;">{{employee.jobTitle}}</div>                
       </div>  
     </div>
   </div>  
 
   <div class="row row-centered">
-    <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
+    <div class="col-xs-24 col-md-16 col-lg-16 col-centered col-max">
       
       <div ng-cloak layout-gt-sm="row" layout="column">
         <div flex-gt-sm="50" flex>
@@ -100,7 +100,7 @@
   </div>
 
   <div class="row row-centered" style="margin-top: 50px;">
-    <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
+    <div class="col-xs-24 col-md-16 col-lg-16 col-centered col-max">
       <md-button class="md-warn" ng-click="alert('sdfsds');">Prijavi netočne podatke</md-button>
       <md-button ng-click="updateData();">Izmijeni podatke</md-button> <!--ng-href="#/update"-->
     </div>
