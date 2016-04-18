@@ -235,7 +235,10 @@ imenik.controller('UpdateCtrl', [
             if(newValue !== undefined) {
                 var myCanvas = document.createElement('canvas');
                 var ctx = myCanvas.getContext('2d');
+                myCanvas.height = 60;
+                myCanvas.width = 60;
                 var img = new Image;
+                
                 img.onload = function(){
                     ctx.drawImage(img,0,0, 60, 60);
                     var base64 = myCanvas.toDataURL('image/jpeg');
