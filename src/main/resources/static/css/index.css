@@ -71,6 +71,12 @@ input:-webkit-autofill:focus {
    text-align: center;
 }
 
+.update-title {
+   font-size: 72px;
+   font-family: 'Ubuntu Condensed', "Helvetica Neue",Helvetica,Arial,sans-serif;  
+   text-align: center;
+}
+
 /* Tab changes */
 
 md-tabs .md-tab.md-active {
@@ -177,48 +183,48 @@ md-input-container.md-default-theme label, md-input-container label, md-input-co
 /* INFO PAGE */
 
 .info-top-header {
-    height: 350px;
-    background: transparent url('../img/info_top_background.jpg') no-repeat center center;   
-    background-size: cover;
+  height: 350px;
+  background: transparent url('../img/info_top_background.jpg') no-repeat center center;   
+  background-size: cover;
 }
 
 .info-top-header > .row {
-    height: 350px;    
-    background: rgba(0,0,0,.64);
+  height: 350px;    
+  background: rgba(0,0,0,.64);
 }
 
 .employee-image {
-    width: 200px;
-    height: 200px;
-    margin-top: 30px;
-    border-radius: 50%;
-    border: 3px solid #fff;
+  width: 200px;
+  height: 200px;
+  margin-top: 30px;
+  border-radius: 50%;
+  border: 3px solid #fff;
 }
 
 .employee-data-firstrow, .employee-data-secondrow {
-    height: 35px;
-    font-size: 24px;
-    color: white;
-    text-align: center;
-    text-shadow: -1px -1px 2px rgba(0, 0, 0, 1);
+  height: 35px;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  text-shadow: -1px -1px 2px rgba(0, 0, 0, 1);
 }
 
 .employee-data-firstrow {
-   margin-bottom: 15px;    
-   font-size: 36px;
-   font-family: 'Ubuntu Condensed', "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin-bottom: 15px;    
+  font-size: 36px;
+  font-family: 'Ubuntu Condensed', "Helvetica Neue",Helvetica,Arial,sans-serif;
 }    
 
 .employee-data-secondrow {
 	font-family: 'Open Sans', Arial, sans-serif !important;
-    font-size: 16px;
-    color: #ccc;    
+  font-size: 16px;
+  color: #ccc;    
 }
 
 .sub-info-header {
-    height: 25px;    
-    background-color: #b83e2c;
-    border-top: 1px solid white;
+  height: 25px;    
+  background-color: #b83e2c;
+  border-top: 1px solid white;
 }
 
 .col-centered button, .col-centered a {
@@ -228,21 +234,58 @@ md-input-container.md-default-theme label, md-input-container label, md-input-co
 /* Info center column */
 
 .row-centered {
-    text-align:center;
+  text-align:center;
 }
+
 .col-centered {
-    display:inline-block;
-    float:none;
-    text-align:left;
-    margin-right:-4px;
+  display:inline-block;
+  float:none;
+  text-align:left;
+  margin-right:-4px;
 }
 
 .col-fixed {
-    width:800px;
+  width:800px;
 }
+
 .col-min {
-    min-width:800px;
+  min-width:800px;
 }
+
 .col-max {
-    max-width:800px;
+  max-width:800px;
+}
+
+.col-min-wide {
+  min-width:1000px; 
+}
+
+.col-max-wide {
+  max-width:1000px; 
+}
+
+/* Image Resizer */
+
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:300px;
+  height:300px;
+}
+
+.currentImage {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:300px;
+  min-height: 150px;
+  height:auto;
+}
+
+.resizer-containers {
+  font-family: 'Open Sans', Arial, sans-serif !important;
+}
+
+.resizer-header-label {
+  font-size: 20px !important;
+  color: rgba(0,0,0,0.97) !important;
 }

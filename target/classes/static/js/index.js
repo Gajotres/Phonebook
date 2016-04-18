@@ -1,4 +1,4 @@
-var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter','ngMessages']);
+var imenik = angular.module('imenik', ['ngRoute','ngMaterial','angular.filter','ngMessages','ngImgCrop']);
 
 imenik.run(function($rootScope, $location) {
   $rootScope.$on("$routeChangeSuccess", function(authorization) {
@@ -26,10 +26,10 @@ imenik.config(function($routeProvider, $locationProvider) {
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })   
-    .when('/update', {
+    .when('/update/:zaposlenikid', {
         templateUrl: 'templates/update.html',
         controller: 'UpdateCtrl',
-        resolve: {
+        /*resolve: {
             auth: ["$q", "Authentication", function($q, Authentication) {
                 var userInfo = Authentication.getUserInfo();
 
@@ -39,7 +39,7 @@ imenik.config(function($routeProvider, $locationProvider) {
                     return $q.reject({ authenticated: false });
                 }
             }]
-        }
+        }*/
     })     
     .otherwise({
         redirectTo: '/'
@@ -153,11 +153,6 @@ imenik.controller('SearchListCtrl', [
             $location.path('/zaposlenik/' + id);
         }
 
-        $scope.updateData = function() {
-            alert('sdfgsd');
-            $location.path('/update');
-        }        
-
         // Reload data when route changes from EmployeeInfoCtrl to SearchListCtrl; data is reloaded from the Service Storage 
         if(!$scope.input.term){
             $scope.input.term = Storage.getSearchTerm();
@@ -170,11 +165,16 @@ imenik.controller('EmployeeInfoCtrl', [
     '$scope',
     '$routeParams',
     'Employees',
-    function ($scope, $routeParams, Employees) {
+    '$location',
+    function ($scope, $routeParams, Employees, $location) {
             
         Employees.find($routeParams.zaposlenikid, function(employee) {
             $scope.employee = employee;
         });
+
+        $scope.updateData = function() {
+            $location.path('/update/' + $scope.employee.id);
+        }        
     }
 ]);
 
@@ -208,8 +208,56 @@ imenik.controller('HeaderCtrl', [
 
 imenik.controller('UpdateCtrl', [
     '$scope',
-    function ($scope, $routeParams) {
+    '$routeParams',
+    'Employees',
+    function ($scope, $routeParams, Employees) {
 
+        $scope.saveEmployeeData = function() {
+            var employeeData = {
+              id: $scope.employee.id,  
+              image: $scope.largeImage,
+              smallImage: $scope.smallImage,
+              telephoneNumber: $scope.employee.telephoneNumber,
+              mobilephoneNumber: $scope.employee.mobilephoneNumber                
+            }
+            Employees.update(employeeData);
+        }
+     
+        $scope.myImage='';
+        $scope.largeImage='';
+
+        Employees.find($routeParams.zaposlenikid, function(employee) {
+            $scope.employee = employee;
+            $scope.largeImage = 'data:image/png;base64,' + employee.image;
+        });
+
+        $scope.$watch("largeImage", function(newValue, oldValue){
+            if(newValue !== undefined) {
+                var myCanvas = document.createElement('canvas');
+                var ctx = myCanvas.getContext('2d');
+                var img = new Image;
+                img.onload = function(){
+                    ctx.drawImage(img,0,0, 60, 60);
+                    var base64 = myCanvas.toDataURL('image/jpeg');
+                    $scope.$apply(function () {
+                        $scope.smallImage = base64;
+                    });        
+                };
+                img.src = $scope.largeImage;
+            }
+        });        
+
+        var handleFileSelect=function(evt) {
+          var file=evt.currentTarget.files[0];
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            $scope.$apply(function($scope){
+              $scope.myImage=evt.target.result;
+            });
+          };        
+          reader.readAsDataURL(file);
+        };
+        angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);        
     }
 ]);
 
@@ -241,8 +289,22 @@ imenik.factory('Employees', function($http) {
         }
     }
 
+    function updateEmployeesData(employeeData) {
+
+        $http.post("http://localhost:8080/employees/update", {
+          id: employeeData.id,
+          image: employeeData.image,
+          smallImage: employeeData.smallImage,
+          telephoneNumber: employeeData.telephoneNumber,
+          mobilephoneNumber: employeeData.mobilephoneNumber
+        }).success(function(data) {
+            console.log('Employee profile updated');
+        });
+    }
+
     return {
         list : getEmployeesData,
+        update : updateEmployeesData,
         find : function(id, callback) {
          
             var url = 'http://localhost:8080/employees/id/' + id;

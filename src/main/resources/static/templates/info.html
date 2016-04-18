@@ -3,7 +3,7 @@
     <div class="row" style="margin:0;">
       <div class="row" style="margin:0;">
         <div class="center-block placeholder image-placeholder" style="width: 206px; height: 206px;position: relative;">
-          <img ng-src="data:image/png;base64,{{employee.image}}"  onerror="this.src = 'img/dummy_user.jpg';" class="employee-image center-block"/>                 
+          <img ng-src="data:image/jpeg;base64,{{employee.image}}"  onerror="this.src = 'img/dummy_user.jpg';" class="employee-image center-block"/>                 
         </div>
       </div>
       <div class="row" style="margin:0;">
@@ -102,7 +102,7 @@
   <div class="row row-centered" style="margin-top: 50px;">
     <div class="col-xs-12 col-md-6 col-lg-6 col-centered col-max">
       <md-button class="md-warn" ng-click="alert('sdfsds');">Prijavi netočne podatke</md-button>
-      <md-button ng-href="#/update">Izmijeni podatke</md-button> 
+      <md-button ng-click="updateData();">Izmijeni podatke</md-button> <!--ng-href="#/update"-->
     </div>
   </div>  
 
