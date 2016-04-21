@@ -24,7 +24,7 @@
         </md-tab>
         <md-tab label="Prema slovu">
           <md-content class="md-padding">
-            <md-select ng-model="selectedLetter" placeholder="Odaberite slovo">
+            <md-select ng-model="input.letter" placeholder="Odaberite slovo" ng-change="findEmployeesByLastNameFirstLetter()">
               <md-option ng-value="letter" ng-repeat="letter in letters">{{ letter.name }}</md-option>
             </md-select>
           </md-content>

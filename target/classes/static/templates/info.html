@@ -42,7 +42,7 @@
               <md-icon md-font-library="material-icons" style="width: 36px !important; height: 36px !important; font-size: 36px;">view_column</md-icon>
               <div class="md-list-item-text">
                 <h3> PODORGANIZACIJSKA JEDINICA: </h3>
-                <p> {{employee.subOrganizationName}} </p>
+                <p> {{employee.subOrganizationName | nullValue}} </p>
               </div>
             </md-list-item>
 
@@ -73,7 +73,7 @@
               <md-icon md-font-library="material-icons" style="width: 36px !important; height: 36px !important; font-size: 36px;">call</md-icon>
               <div class="md-list-item-text">
                 <h3> TELEFON: </h3>
-                <p> {{employee.telephoneNumber}} </p>
+                <p> {{employee.telephoneNumber | formatTelephone}} </p>
               </div>
             </md-list-item>
 
@@ -81,7 +81,7 @@
               <md-icon md-font-library="material-icons" style="width: 36px !important; height: 36px !important; font-size: 36px;">stay_primary_portrait</md-icon>
               <div class="md-list-item-text">
                 <h3> MOBITEL: </h3>
-                <p> {{employee.mobilephoneNumber}} </p>
+                <p> {{employee.mobilephoneNumber | formatMobile}} </p>
               </div>
             </md-list-item>
 

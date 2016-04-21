@@ -57,7 +57,7 @@ imenik.controller('SearchListCtrl', [
     'croatianConstants',
     function ($scope, $routeParams, $location, Employees, Storage, croatianConstants) {
 
-        $scope.letters = croatianConstants.letters.split(' ');
+        $scope.letters = [];
         $scope.usedLetters = [];
         $scope.employees = [];
         $scope.formatedEmployees = [];
@@ -72,16 +72,19 @@ imenik.controller('SearchListCtrl', [
         // Fill Letters selectbox
         var counter = 0;
 
-        angular.forEach($scope.letters, function(value){
+        angular.forEach(croatianConstants.letters.split(' '), function(value){
              $scope.letters.push({id: counter++, name : value});
         });    
-        $scope.selectedLetter = { id: 1, name: 'A' };
 
         $scope.findEmployeesByTerm = function() {
             if($scope.input.term.length > 2) {
                 $scope.findEmployees($scope.input.term, 'term');
             }
         };
+
+        $scope.findEmployeesByLastNameFirstLetter = function() {
+            $scope.findEmployees($scope.input.letter.name, 'letter');
+        }
 
         $scope.findEmployees = function(term, method) {
             if(term) {
@@ -238,7 +241,7 @@ imenik.controller('UpdateCtrl', [
                 myCanvas.height = 60;
                 myCanvas.width = 60;
                 var img = new Image;
-                
+
                 img.onload = function(){
                     ctx.drawImage(img,0,0, 60, 60);
                     var base64 = myCanvas.toDataURL('image/jpeg');
@@ -395,6 +398,16 @@ imenik.filter('formatTelephone', function(croatianConstants){
     return function(input) {
         if (input && input.length > 0 && input !== 'NULL') {
             return (input.length === 4) ? input + ' (' + croatianConstants.countryPrefix + croatianConstants.companyTelephonePrefixPattern + input.substring(1) + ')' : input;
+        } else {
+            return '-';
+        }
+    };
+});
+
+imenik.filter('nullValue', function(){
+    return function(input) {
+        if (input && input.length > 0 && input !== 'NULL') {
+            return input;
         } else {
             return '-';
         }

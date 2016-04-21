@@ -47,6 +47,12 @@ public class EmployeeController {
     }
     
     @CrossOrigin()
+    @RequestMapping(value = "/letter/{letter}", produces = "application/json")
+    public Iterable<Employee> getEmployeeByLetter(@PathVariable("letter") String letter) {
+    	return  eDao.findEmployeesByFirstLastNameLetter(letter);
+    }    
+    
+    @CrossOrigin()
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
     public void updateEmployeeData(@RequestBody @Valid final SaveEmployee saveEmployee) {
