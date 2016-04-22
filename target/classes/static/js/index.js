@@ -61,35 +61,71 @@ imenik.controller('SearchListCtrl', [
         $scope.usedLetters = [];
         $scope.employees = [];
         $scope.formatedEmployees = [];
-        $scope.organizations = {};  
+        $scope.organizations = [];
+        $scope.activeTab = [];
 
+        $scope.showLoader = false;
         $scope.input = {
             term : 'Dragan',
-            letter: '',
-            org: ''
+            letter: { name: '' },
+            org: { name: '' }
         }
 
-        // Fill Letters selectbox
-        var counter = 0;
+        $scope.fillSearchDropBoxes = function() {
 
-        angular.forEach(croatianConstants.letters.split(' '), function(value){
-             $scope.letters.push({id: counter++, name : value});
-        });    
+            if($scope.letters.length === 0) {
+                // Fill Letters dropbox
+                var letterId = 0;
+
+                angular.forEach(croatianConstants.letters.split(' '), function(value){
+                     $scope.letters.push({id: letterId++, name : value});
+                }); 
+            }
+
+            if($scope.organizations.length === 0) {
+                // Fill org. unit dropbox
+                Employees.getOrgUnits(function(orgUnits) {
+                    angular.forEach(orgUnits, function(orgUnit){
+                        $scope.organizations.push({id: orgUnit.orgId, name : orgUnit.orgName});
+                    });
+                });
+            }
+        }    
 
         $scope.findEmployeesByTerm = function() {
             if($scope.input.term.length > 2) {
                 $scope.findEmployees($scope.input.term, 'term');
             }
+
+            $scope.activeTab = { term : true, letter: false, org: false }
+            Storage.setActiveTab($scope.activeTab);            
+            $scope.input = { term : $scope.input.term, letter: { name: '' }, org: { name: '' }} 
+            Storage.setSearchTerm($scope.input.term);
         };
 
         $scope.findEmployeesByLastNameFirstLetter = function() {
             $scope.findEmployees($scope.input.letter.name, 'letter');
+
+            $scope.activeTab = { term : false, letter: true, org: false }
+            Storage.setActiveTab($scope.activeTab);
+            $scope.input = { term : '', letter: {name: $scope.input.letter.name}, org: { name: '' }} 
+            Storage.setSearchTerm($scope.input.letter.name);           
         }
+
+        $scope.findEmployeesByOrgId = function() {
+            $scope.findEmployees($scope.input.org.name, 'term');
+
+            $scope.activeTab = { term : false, letter: false, org: true }
+            Storage.setActiveTab($scope.activeTab);
+            $scope.input = { term : '', letter: { name: '' }, org: {name: $scope.input.org.name }}
+            Storage.setSearchTerm($scope.input.org.name);             
+        }        
 
         $scope.findEmployees = function(term, method) {
             if(term) {
-                Storage.setSearchTerm(term);
+                $scope.showLoader = !$scope.showLoader;
                 Employees.list(term, method, function(employees) {
+                    $scope.showLoader = !$scope.showLoader;
                     $scope.employees = employees;
                     $scope.reformatResponse();
                 });            
@@ -156,11 +192,19 @@ imenik.controller('SearchListCtrl', [
             $location.path('/zaposlenik/' + id);
         }
 
-        // Reload data when route changes from EmployeeInfoCtrl to SearchListCtrl; data is reloaded from the Service Storage 
-        if(!$scope.input.term){
-            $scope.input.term = Storage.getSearchTerm();
-        }    
-        $scope.findEmployeesByTerm();
+        $scope.fillSearchDropBoxes();
+
+        $scope.activeTab = Storage.getActiveTab();
+        if($scope.activeTab.letter) {
+            $scope.input.letter.name = Storage.getSearchTerm();
+            $scope.findEmployeesByLastNameFirstLetter();
+        } else if($scope.activeTab.org) {
+            $scope.input.org.name = Storage.getSearchTerm();
+            $scope.findEmployeesByOrgId();
+        } else {
+            $scope.input.term = ($scope.input.term.length > 0) ? $scope.input.term : Storage.getSearchTerm();
+            $scope.findEmployeesByTerm();
+        }
     }
 ]);
 
@@ -278,7 +322,22 @@ imenik.constant("croatianConstants", {
 imenik.factory('Employees', function($http) {
     
     var cachedEmployees;
+    var cachedOrgUnits;
     var cashedTerm;
+
+    function getOrgUnit(callback) {
+
+        if(cachedOrgUnits) {
+            callback(cachedOrgUnits);
+        } else {
+            var url = 'http://localhost:8080/orgunits/get';
+
+            $http.get(url).success(function(data) {
+                cachedOrgUnits = data;
+                callback(data);
+            });
+        }    
+    }
 
     function getEmployeesData(term, method, callback) {
 
@@ -294,7 +353,7 @@ imenik.factory('Employees', function($http) {
             });
         }
     }
-
+ 
     function updateEmployeesData(employeeData) {
 
         $http.post("http://localhost:8080/employees/update", {
@@ -310,6 +369,7 @@ imenik.factory('Employees', function($http) {
 
     return {
         list : getEmployeesData,
+        getOrgUnits: getOrgUnit,
         update : updateEmployeesData,
         find : function(id, callback) {
          
@@ -329,13 +389,25 @@ imenik.factory('Storage', function() {
         searchTerm : ''
     };
     
+    Storage.activeTab = {
+        term : true,
+        letter: false,
+        org: false
+    }
+
     return {
         getSearchTerm : function() {
             return Storage.search.searchTerm;
         },
+        getActiveTab : function() {
+            return Storage.activeTab;
+        },        
         setSearchTerm : function(value) {
             Storage.search.searchTerm = value;
-        }
+        },
+        setActiveTab : function(value) {
+            Storage.activeTab = value;
+        }        
     };    
 });
 

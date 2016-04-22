@@ -1,3 +1,10 @@
+<div id="loadingWidgetSave" ng-show="showLoader">
+  <div class="vertical-center-container">
+    <div class="innner-container">
+    <img alt="Loading  Content" src="img/ajax-loader.gif" />
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row" style="margin: 10px 0;">
 
@@ -10,7 +17,8 @@
         <div style="width: 120px; height: 5px; border-bottom: 1px solid #c12017; margin: 0 auto;"></div>
       </div>
       <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always">
-        <md-tab label="Prema broju">
+
+        <md-tab label="Prema broju" md-active="activeTab.term">
           <md-content class="md-padding">
             <md-input-container style="width: 100%;">
               <label>Upišite pojam</label>
@@ -19,22 +27,25 @@
             <div style="width: 100%;">
               <md-button class="md-raised md-warn" style="padding: 3px 10px; margin: 0 auto; display: block !important; background: #c12017;" ng-click="findEmployeesByTerm()">Započni pretragu</md-button>
             </div>
-            
           </md-content>
         </md-tab>
-        <md-tab label="Prema slovu">
+
+        <md-tab label="Prema slovu" md-active="activeTab.letter">
           <md-content class="md-padding">
             <md-select ng-model="input.letter" placeholder="Odaberite slovo" ng-change="findEmployeesByLastNameFirstLetter()">
               <md-option ng-value="letter" ng-repeat="letter in letters">{{ letter.name }}</md-option>
             </md-select>
           </md-content>
         </md-tab>
-        <md-tab label="Organizacijska jedinica">
+
+        <md-tab label="Organizacijska jedinica" md-active="activeTab.org">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Tab Three</h1>
-            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+            <md-select ng-model="input.org" placeholder="Odaberite organizacijsku jedinicu" ng-change="findEmployeesByOrgId()">
+              <md-option ng-value="organization" ng-repeat="organization in organizations">{{ organization.name }}</md-option>
+            </md-select>
           </md-content>
         </md-tab>
+
       </md-tabs>
     </div>
     <div class="col-md-4 col-lg-4 visible-md-block visible-lg-block"></div>

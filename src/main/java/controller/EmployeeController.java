@@ -50,7 +50,13 @@ public class EmployeeController {
     @RequestMapping(value = "/letter/{letter}", produces = "application/json")
     public Iterable<Employee> getEmployeeByLetter(@PathVariable("letter") String letter) {
     	return  eDao.findEmployeesByFirstLastNameLetter(letter);
-    }    
+    } 
+    
+    @CrossOrigin()
+    @RequestMapping(value = "/orgid/{orgid}", produces = "application/json")
+    public Iterable<Employee> getEmployeeByOrgId(@PathVariable("orgid") String orgid) {
+    	return  eDao.findEmployeesByOrgNameId(orgid);
+    }     
     
     @CrossOrigin()
     @RequestMapping(value = "/update",method = RequestMethod.POST)
