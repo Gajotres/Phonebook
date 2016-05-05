@@ -29,7 +29,7 @@ imenik.config(function($routeProvider, $locationProvider) {
     .when('/update/:zaposlenikid', {
         templateUrl: 'templates/update.html',
         controller: 'UpdateCtrl',
-        /*resolve: {
+        resolve: {
             auth: ["$q", "Authentication", function($q, Authentication) {
                 var userInfo = Authentication.getUserInfo();
 
@@ -39,7 +39,7 @@ imenik.config(function($routeProvider, $locationProvider) {
                     return $q.reject({ authenticated: false });
                 }
             }]
-        }*/
+        }
     })     
     .otherwise({
         redirectTo: '/'
@@ -66,7 +66,7 @@ imenik.controller('SearchListCtrl', [
 
         $scope.showLoader = false;
         $scope.input = {
-            term : 'Dragan',
+            term : 'Odjel It',
             letter: { name: '' },
             org: { name: '' }
         }
@@ -319,6 +319,8 @@ imenik.constant("croatianConstants", {
     "dummy_image" : "dummy_user.jpg"
 });
 
+//HRGPWL0053- 
+
 imenik.factory('Employees', function($http) {
     
     var cachedEmployees;
@@ -330,7 +332,7 @@ imenik.factory('Employees', function($http) {
         if(cachedOrgUnits) {
             callback(cachedOrgUnits);
         } else {
-            var url = 'http://localhost:8080/orgunits/get';
+            var url = 'http://HRGPWL0053:8080/orgunits/get';
 
             $http.get(url).success(function(data) {
                 cachedOrgUnits = data;
@@ -344,7 +346,7 @@ imenik.factory('Employees', function($http) {
         if(cachedEmployees && cashedTerm === term) {
             callback(cachedEmployees);
         } else {
-            var url = 'http://localhost:8080/employees/' + method + '/' + term;
+            var url = 'http://HRGPWL0053:8080/employees/' + method + '/' + term;
 
             $http.get(url).success(function(data) {
                 cachedEmployees = data;
@@ -356,7 +358,7 @@ imenik.factory('Employees', function($http) {
  
     function updateEmployeesData(employeeData) {
 
-        $http.post("http://localhost:8080/employees/update", {
+        $http.post("http://HRGPWL0053:8080/employees/update", {
           id: employeeData.id,
           image: employeeData.image,
           smallImage: employeeData.smallImage,
@@ -373,7 +375,7 @@ imenik.factory('Employees', function($http) {
         update : updateEmployeesData,
         find : function(id, callback) {
          
-            var url = 'http://localhost:8080/employees/id/' + id;
+            var url = 'http://HRGPWL0053:8080/employees/id/' + id;
 
             $http.get(url).success(function(data) {
                 callback(data);
@@ -417,7 +419,7 @@ imenik.factory('Authentication', function($http, $q, $window) {
   function login(userName, password, callback) {
     var deferred = $q.defer();
 
-    $http.post("http://localhost:8080/user/authorize", {
+    $http.post("http://HRGPWL0053:8080/user/authorize", {
       userName: userName,
       password: sha256_digest(password)
     }).then(function(result) {
