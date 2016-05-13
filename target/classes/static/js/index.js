@@ -311,6 +311,11 @@ imenik.controller('UpdateCtrl', [
     }
 ]);
 
+imenik.constant("serverConstants", {
+    "serverPathTest": "http://HR00SA0038:8080/",
+    "serverPath": "http://HRGPWL0053:8080/"
+});
+
 imenik.constant("croatianConstants", {
     "letters": "A B C Ć Č D DŽ Đ E F G H I J K L LJ M N NJ O P R S Š T U V Z Ž",
     "countryPrefix" : "+385",
@@ -321,7 +326,7 @@ imenik.constant("croatianConstants", {
 
 //HRGPWL0053- 
 
-imenik.factory('Employees', function($http) {
+imenik.factory('Employees', function($http, serverConstants) {
     
     var cachedEmployees;
     var cachedOrgUnits;
@@ -332,7 +337,7 @@ imenik.factory('Employees', function($http) {
         if(cachedOrgUnits) {
             callback(cachedOrgUnits);
         } else {
-            var url = 'http://HRGPWL0053:8080/orgunits/get';
+            var url = serverConstants.serverPath + 'orgunits/get';
 
             $http.get(url).success(function(data) {
                 cachedOrgUnits = data;
@@ -346,7 +351,7 @@ imenik.factory('Employees', function($http) {
         if(cachedEmployees && cashedTerm === term) {
             callback(cachedEmployees);
         } else {
-            var url = 'http://HRGPWL0053:8080/employees/' + method + '/' + term;
+            var url = serverConstants.serverPath + 'employees/' + method + '/' + term;
 
             $http.get(url).success(function(data) {
                 cachedEmployees = data;
@@ -358,7 +363,7 @@ imenik.factory('Employees', function($http) {
  
     function updateEmployeesData(employeeData) {
 
-        $http.post("http://HRGPWL0053:8080/employees/update", {
+        $http.post(serverConstants.serverPath + 'employees/update', {
           id: employeeData.id,
           image: employeeData.image,
           smallImage: employeeData.smallImage,
@@ -375,7 +380,7 @@ imenik.factory('Employees', function($http) {
         update : updateEmployeesData,
         find : function(id, callback) {
          
-            var url = 'http://HRGPWL0053:8080/employees/id/' + id;
+            var url = serverConstants.serverPath + 'employees/id/' + id;
 
             $http.get(url).success(function(data) {
                 callback(data);
@@ -413,13 +418,13 @@ imenik.factory('Storage', function() {
     };    
 });
 
-imenik.factory('Authentication', function($http, $q, $window) {
+imenik.factory('Authentication', function($http, $q, $window, serverConstants) {
   var authorization;
 
   function login(userName, password, callback) {
     var deferred = $q.defer();
 
-    $http.post("http://HRGPWL0053:8080/user/authorize", {
+    $http.post(serverConstants.serverPath + 'user/authorize', {
       userName: userName,
       password: sha256_digest(password)
     }).then(function(result) {

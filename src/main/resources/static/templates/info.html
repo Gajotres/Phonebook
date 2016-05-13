@@ -2,8 +2,9 @@
   <div class="row info-top-header">    
     <div class="row" style="margin:0;">
       <div class="row" style="margin:0;">
-        <div class="center-block placeholder image-placeholder" style="width: 206px; height: 206px;position: relative;">
-          <img ng-src="data:image/jpeg;base64,{{employee.image}}"  onerror="this.src = 'img/dummy_user.jpg';" class="employee-image center-block"/>                 
+        <div class="center-block placeholder image-placeholder" style="width: 412px; height: 206px;position: relative;">
+          <img ng-src="data:image/jpeg;base64,{{employee.image}}"  onerror="this.src = 'img/dummy_user.jpg';" class="employee-image center-block" style="float: left;"/>                 
+          <div id="barcode" style="width: 200px; height: 200px; float: left; background: red;margin-top: 30px;"></div>
         </div>
       </div>
       <div class="row" style="margin:0;">

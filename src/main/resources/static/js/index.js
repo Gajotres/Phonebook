@@ -12,6 +12,19 @@ imenik.run(function($rootScope, $location) {
   });
 });
 
+imenik.constant("serverConstants", {
+    "serverPath": "http://HR00SA0038:8080/",
+    "serverPathTest": "http://HRGPWL0053:8080/"
+});
+
+imenik.constant("croatianConstants", {
+    "letters": "A B C Ć Č D DŽ Đ E F G H I J K L LJ M N NJ O P R S Š T U V Z Ž",
+    "countryPrefix" : "+385",
+    "companyMobilePrefixPattern" : /^0914501/,
+    "companyTelephonePrefixPattern" : " 1 4600",
+    "dummy_image" : "dummy_user.jpg"
+});
+
 imenik.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
@@ -44,8 +57,6 @@ imenik.config(function($routeProvider, $locationProvider) {
     .otherwise({
         redirectTo: '/'
     }); 
-
-    //$locationProvider.html5Mode(true);  
 });
 
 imenik.controller('SearchListCtrl', [
@@ -217,10 +228,90 @@ imenik.controller('EmployeeInfoCtrl', [
             
         Employees.find($routeParams.zaposlenikid, function(employee) {
             $scope.employee = employee;
+            $scope.generateQRCode(employee);
         });
 
         $scope.updateData = function() {
             $location.path('/update/' + $scope.employee.id);
+        }
+
+        $scope.generateQRCode = function(employee) {
+
+            jQuery("#barcode").igQRCodeBarcode({
+                height: "200px",
+                width: "200px",
+                barsFillMode: "ensureEqualSize",
+                errorCorrectionLevel: "low",
+                xDimension: 0.75,
+                data: ""
+            });
+
+            var barcodeN = "",
+                barcodeFN = "",
+                beginVCard = "BEGIN:VCARD\r\nVERSION:2.1\r\n",
+                endVCard = "END:VCARD";
+
+            var prefix = "";
+            var firstName = employee.firstName;
+            var middleName = "";
+            var secondName = employee.lastName;
+            var street = "";
+            var city = employee.location;
+            var state = "";
+            var country = "Croatia";
+            var zipcode = "";
+
+            if (prefix != "" || prefix != null) {
+                if (middleName != "" || middleName != null) {
+                    barcodeN = "N:" + secondName + ";" + middleName + ";" + firstName + ";" + prefix + "\r\n";
+                    barcodeFN = "FN" + prefix + firstName + " " + middleName + " " + secondName + "\r\n";
+                } else {
+                    barcodeN = "N:" + secondName + ";" + firstName + ";" + prefix + "\r\n";
+                    barcodeFN = "FN" + prefix + firstName + " " + secondName + "\r\n";
+                }
+            } else {
+                if (middleName != "" || middleName != null) {
+                    barcodeN = "N:" + secondName + ";" + middleName + ";" + firstName + "\r\n";
+                    barcodeFN = "FN" + firstName + " " + middleName + " " + secondName + "\r\n";
+                } else {
+                    barcodeN = "N:" + secondName + ";" + firstName + "\r\n";
+                    barcodeFN = "FN" + firstName + " " + secondName + "\r\n";
+                }
+            }
+            var address = "ADR;WORK:;";
+            var array = [street, city, state, country, zipcode];
+            for (var i = 0; i < array.length; i++) {
+                if (array[i] != "") {
+                    address += ";" + array[i];
+                } else {
+                    address += ";";
+                }
+            }
+            address = address.concat("\r\n");
+
+            barcode = beginVCard;
+            barcode = barcode.concat(barcodeN, barcodeFN, address); 
+
+            if(employee.email !== undefined && employee.email !== null && employee.email !== 'NULL') {
+                barcode+= "EMAIL;INTERNET:" + $scope.employee.email + "\r\n";    
+            }
+
+            if(employee.telephoneNumber !== undefined && employee.telephoneNumber !== null && employee.telephoneNumber !== 'NULL') {
+                barcode+= "TEL;HOME;VOICE:" + employee.telephoneNumber + "\r\n";   
+            }
+
+            if(employee.mobilephoneNumber !== undefined && employee.mobilephoneNumber !== null && employee.mobilephoneNumber !== 'NULL') {
+                barcode+= "TEL;CELL;VOICE:" + employee.mobilephoneNumber + "\r\n";
+            }
+            
+            barcode = barcode.concat(endVCard);
+
+            console.log(barcode);
+            console.log($scope.employee);
+
+            jQuery("#barcode").igQRCodeBarcode("option", "data", barcode);
+            //jQuery("#barcode").show();
+
         }        
     }
 ]);
@@ -243,13 +334,6 @@ imenik.controller('LoginCtrl', [
                 $location.path("/update");
             });
         }
-    }
-]);
-
-imenik.controller('HeaderCtrl', [
-    '$scope',
-    function ($scope, $routeParams) {
-
     }
 ]);
 
@@ -310,19 +394,6 @@ imenik.controller('UpdateCtrl', [
         angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);        
     }
 ]);
-
-imenik.constant("serverConstants", {
-    "serverPathTest": "http://HR00SA0038:8080/",
-    "serverPath": "http://HRGPWL0053:8080/"
-});
-
-imenik.constant("croatianConstants", {
-    "letters": "A B C Ć Č D DŽ Đ E F G H I J K L LJ M N NJ O P R S Š T U V Z Ž",
-    "countryPrefix" : "+385",
-    "companyMobilePrefixPattern" : /^0914501/,
-    "companyTelephonePrefixPattern" : " 1 4600",
-    "dummy_image" : "dummy_user.jpg"
-});
 
 //HRGPWL0053- 
 
